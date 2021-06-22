@@ -1,0 +1,318 @@
+{
+  "name" : "j6036_8",
+  "type" : "RCPSP",
+  "activities" : [ {
+    "id" : 0,
+    "duration" : 0,
+    "resourceConsumption" : [ 0, 0, 0, 0 ],
+    "successors" : [ 1, 2, 3 ]
+  }, {
+    "id" : 1,
+    "duration" : 5,
+    "resourceConsumption" : [ 0, 0, 1, 0 ],
+    "successors" : [ 5, 15, 37 ]
+  }, {
+    "id" : 2,
+    "duration" : 3,
+    "resourceConsumption" : [ 0, 9, 0, 0 ],
+    "successors" : [ 4, 19, 36 ]
+  }, {
+    "id" : 3,
+    "duration" : 6,
+    "resourceConsumption" : [ 0, 4, 0, 0 ],
+    "successors" : [ 6, 7, 13 ]
+  }, {
+    "id" : 4,
+    "duration" : 3,
+    "resourceConsumption" : [ 1, 0, 0, 0 ],
+    "successors" : [ 6, 9, 21 ]
+  }, {
+    "id" : 5,
+    "duration" : 7,
+    "resourceConsumption" : [ 4, 0, 0, 0 ],
+    "successors" : [ 14, 17, 20 ]
+  }, {
+    "id" : 6,
+    "duration" : 7,
+    "resourceConsumption" : [ 0, 0, 7, 0 ],
+    "successors" : [ 18, 33, 52 ]
+  }, {
+    "id" : 7,
+    "duration" : 3,
+    "resourceConsumption" : [ 0, 0, 3, 0 ],
+    "successors" : [ 8, 10, 35 ]
+  }, {
+    "id" : 8,
+    "duration" : 8,
+    "resourceConsumption" : [ 1, 0, 0, 0 ],
+    "successors" : [ 11, 12, 40 ]
+  }, {
+    "id" : 9,
+    "duration" : 2,
+    "resourceConsumption" : [ 0, 0, 0, 6 ],
+    "successors" : [ 23, 32, 56 ]
+  }, {
+    "id" : 10,
+    "duration" : 3,
+    "resourceConsumption" : [ 0, 0, 5, 0 ],
+    "successors" : [ 22, 37, 39 ]
+  }, {
+    "id" : 11,
+    "duration" : 2,
+    "resourceConsumption" : [ 0, 0, 9, 0 ],
+    "successors" : [ 16, 26, 29 ]
+  }, {
+    "id" : 12,
+    "duration" : 1,
+    "resourceConsumption" : [ 0, 0, 0, 10 ],
+    "successors" : [ 24, 26, 28 ]
+  }, {
+    "id" : 13,
+    "duration" : 5,
+    "resourceConsumption" : [ 0, 6, 0, 0 ],
+    "successors" : [ 15, 27, 30 ]
+  }, {
+    "id" : 14,
+    "duration" : 10,
+    "resourceConsumption" : [ 3, 0, 0, 0 ],
+    "successors" : [ 39, 43, 55 ]
+  }, {
+    "id" : 15,
+    "duration" : 9,
+    "resourceConsumption" : [ 0, 0, 5, 0 ],
+    "successors" : [ 22, 23, 29 ]
+  }, {
+    "id" : 16,
+    "duration" : 8,
+    "resourceConsumption" : [ 4, 0, 0, 0 ],
+    "successors" : [ 19, 25, 48 ]
+  }, {
+    "id" : 17,
+    "duration" : 6,
+    "resourceConsumption" : [ 8, 0, 0, 0 ],
+    "successors" : [ 19, 35, 49 ]
+  }, {
+    "id" : 18,
+    "duration" : 8,
+    "resourceConsumption" : [ 5, 0, 0, 0 ],
+    "successors" : [ 29, 43, 47 ]
+  }, {
+    "id" : 19,
+    "duration" : 10,
+    "resourceConsumption" : [ 0, 6, 0, 0 ],
+    "successors" : [ 38, 39 ]
+  }, {
+    "id" : 20,
+    "duration" : 10,
+    "resourceConsumption" : [ 1, 0, 0, 0 ],
+    "successors" : [ 21, 24, 53 ]
+  }, {
+    "id" : 21,
+    "duration" : 1,
+    "resourceConsumption" : [ 0, 0, 0, 6 ],
+    "successors" : [ 26, 40 ]
+  }, {
+    "id" : 22,
+    "duration" : 10,
+    "resourceConsumption" : [ 0, 7, 0, 0 ],
+    "successors" : [ 42 ]
+  }, {
+    "id" : 23,
+    "duration" : 1,
+    "resourceConsumption" : [ 10, 0, 0, 0 ],
+    "successors" : [ 34 ]
+  }, {
+    "id" : 24,
+    "duration" : 9,
+    "resourceConsumption" : [ 0, 0, 3, 0 ],
+    "successors" : [ 34, 42 ]
+  }, {
+    "id" : 25,
+    "duration" : 9,
+    "resourceConsumption" : [ 0, 0, 0, 3 ],
+    "successors" : [ 31, 38, 51 ]
+  }, {
+    "id" : 26,
+    "duration" : 4,
+    "resourceConsumption" : [ 0, 5, 0, 0 ],
+    "successors" : [ 54 ]
+  }, {
+    "id" : 27,
+    "duration" : 8,
+    "resourceConsumption" : [ 0, 0, 10, 0 ],
+    "successors" : [ 35, 44, 57 ]
+  }, {
+    "id" : 28,
+    "duration" : 10,
+    "resourceConsumption" : [ 0, 0, 6, 0 ],
+    "successors" : [ 30, 31, 56 ]
+  }, {
+    "id" : 29,
+    "duration" : 10,
+    "resourceConsumption" : [ 0, 0, 0, 4 ],
+    "successors" : [ 38, 41, 44 ]
+  }, {
+    "id" : 30,
+    "duration" : 4,
+    "resourceConsumption" : [ 0, 3, 0, 0 ],
+    "successors" : [ 34, 45, 49 ]
+  }, {
+    "id" : 31,
+    "duration" : 2,
+    "resourceConsumption" : [ 2, 0, 0, 0 ],
+    "successors" : [ 36 ]
+  }, {
+    "id" : 32,
+    "duration" : 7,
+    "resourceConsumption" : [ 0, 9, 0, 0 ],
+    "successors" : [ 37, 42, 46 ]
+  }, {
+    "id" : 33,
+    "duration" : 6,
+    "resourceConsumption" : [ 0, 0, 0, 9 ],
+    "successors" : [ 40, 41, 54 ]
+  }, {
+    "id" : 34,
+    "duration" : 1,
+    "resourceConsumption" : [ 0, 0, 0, 4 ],
+    "successors" : [ 43, 46, 57 ]
+  }, {
+    "id" : 35,
+    "duration" : 9,
+    "resourceConsumption" : [ 10, 0, 0, 0 ],
+    "successors" : [ 36, 41, 50 ]
+  }, {
+    "id" : 36,
+    "duration" : 10,
+    "resourceConsumption" : [ 0, 0, 4, 0 ],
+    "successors" : [ 45 ]
+  }, {
+    "id" : 37,
+    "duration" : 6,
+    "resourceConsumption" : [ 0, 0, 0, 3 ],
+    "successors" : [ 49, 53, 60 ]
+  }, {
+    "id" : 38,
+    "duration" : 3,
+    "resourceConsumption" : [ 3, 0, 0, 0 ],
+    "successors" : [ 45, 60 ]
+  }, {
+    "id" : 39,
+    "duration" : 5,
+    "resourceConsumption" : [ 0, 0, 1, 0 ],
+    "successors" : [ 46, 52 ]
+  }, {
+    "id" : 40,
+    "duration" : 10,
+    "resourceConsumption" : [ 6, 0, 0, 0 ],
+    "successors" : [ 51 ]
+  }, {
+    "id" : 41,
+    "duration" : 2,
+    "resourceConsumption" : [ 0, 0, 0, 2 ],
+    "successors" : [ 56 ]
+  }, {
+    "id" : 42,
+    "duration" : 4,
+    "resourceConsumption" : [ 9, 0, 0, 0 ],
+    "successors" : [ 44, 47, 48 ]
+  }, {
+    "id" : 43,
+    "duration" : 7,
+    "resourceConsumption" : [ 0, 1, 0, 0 ],
+    "successors" : [ 48 ]
+  }, {
+    "id" : 44,
+    "duration" : 5,
+    "resourceConsumption" : [ 8, 0, 0, 0 ],
+    "successors" : [ 59 ]
+  }, {
+    "id" : 45,
+    "duration" : 1,
+    "resourceConsumption" : [ 0, 0, 6, 0 ],
+    "successors" : [ 53 ]
+  }, {
+    "id" : 46,
+    "duration" : 5,
+    "resourceConsumption" : [ 0, 8, 0, 0 ],
+    "successors" : [ 47, 60 ]
+  }, {
+    "id" : 47,
+    "duration" : 7,
+    "resourceConsumption" : [ 0, 3, 0, 0 ],
+    "successors" : [ 50 ]
+  }, {
+    "id" : 48,
+    "duration" : 5,
+    "resourceConsumption" : [ 0, 8, 0, 0 ],
+    "successors" : [ 50 ]
+  }, {
+    "id" : 49,
+    "duration" : 10,
+    "resourceConsumption" : [ 0, 0, 7, 0 ],
+    "successors" : [ 52, 55 ]
+  }, {
+    "id" : 50,
+    "duration" : 3,
+    "resourceConsumption" : [ 0, 0, 10, 0 ],
+    "successors" : [ 51, 54 ]
+  }, {
+    "id" : 51,
+    "duration" : 3,
+    "resourceConsumption" : [ 0, 0, 6, 0 ],
+    "successors" : [ 58 ]
+  }, {
+    "id" : 52,
+    "duration" : 3,
+    "resourceConsumption" : [ 0, 0, 3, 0 ],
+    "successors" : [ 57 ]
+  }, {
+    "id" : 53,
+    "duration" : 3,
+    "resourceConsumption" : [ 6, 0, 0, 0 ],
+    "successors" : [ 55 ]
+  }, {
+    "id" : 54,
+    "duration" : 1,
+    "resourceConsumption" : [ 7, 0, 0, 0 ],
+    "successors" : [ 58 ]
+  }, {
+    "id" : 55,
+    "duration" : 10,
+    "resourceConsumption" : [ 0, 0, 0, 4 ],
+    "successors" : [ 59 ]
+  }, {
+    "id" : 56,
+    "duration" : 1,
+    "resourceConsumption" : [ 0, 0, 10, 0 ],
+    "successors" : [ 59 ]
+  }, {
+    "id" : 57,
+    "duration" : 7,
+    "resourceConsumption" : [ 0, 0, 3, 0 ],
+    "successors" : [ 58 ]
+  }, {
+    "id" : 58,
+    "duration" : 5,
+    "resourceConsumption" : [ 0, 0, 5, 0 ],
+    "successors" : [ 61 ]
+  }, {
+    "id" : 59,
+    "duration" : 7,
+    "resourceConsumption" : [ 0, 8, 0, 0 ],
+    "successors" : [ 61 ]
+  }, {
+    "id" : 60,
+    "duration" : 5,
+    "resourceConsumption" : [ 0, 2, 0, 0 ],
+    "successors" : [ 61 ]
+  }, {
+    "id" : 61,
+    "duration" : 0,
+    "resourceConsumption" : [ 0, 0, 0, 0 ],
+    "successors" : [ ]
+  } ],
+  "resourcesAvailabilities" : [ 33, 16, 30, 22 ],
+  "horizon" : 335,
+  "size" : 62
+}
