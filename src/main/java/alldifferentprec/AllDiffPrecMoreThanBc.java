@@ -17,7 +17,13 @@ import org.chocosolver.solver.variables.events.IntEventType;
 import org.chocosolver.util.objects.graphs.DirectedGraph;
 import org.chocosolver.util.objects.setDataStructures.ISetIterator;
 
-public class AllDiffPrecImp extends FilterAllDiffPrec {
+/**
+ * Filtering algorithm for the AllDiffPrec constraint introduced in the following paper :
+ * TODO: add the thesis citation when it is fixed (and/or the CP paper if accepted)
+ *
+ * @author Arthur Godet <arth.godet@gmail.com>
+ */
+public class AllDiffPrecMoreThanBc extends FilterAllDiffPrec {
     private final boolean rcFiltering;
 
     // for augmenting matching (BFS)
@@ -34,11 +40,11 @@ public class AllDiffPrecImp extends FilterAllDiffPrec {
     private final TIntIntHashMap mapValIdx;
     private final int[] mins, maxs;
 
-    public AllDiffPrecImp(IntVar[] variables, boolean[][] precedence) {
+    public AllDiffPrecMoreThanBc(IntVar[] variables, boolean[][] precedence) {
         this(variables, precedence, false);
     }
 
-    public AllDiffPrecImp(IntVar[] variables, boolean[][] precedence, boolean rcFiltering) {
+    public AllDiffPrecMoreThanBc(IntVar[] variables, boolean[][] precedence, boolean rcFiltering) {
         super(variables, precedence);
         this.rcFiltering = rcFiltering;
         this.n = variables.length;
@@ -123,6 +129,13 @@ public class AllDiffPrecImp extends FilterAllDiffPrec {
         return false;
     }
 
+    /**
+     * Builds the bipartite graph induced by the instantiation var <-- val.
+     *
+     * @param var the variable
+     * @param val the value
+     * @return true iff the bipartite graph has been built without any domain's wipe-out
+     */
     private boolean buildDigraph(int var, int val) {
         ISetIterator iterator = digraph.getPredOf(var).iterator();
         int idxVal = mapValIdx.get(val) + n;
@@ -181,6 +194,14 @@ public class AllDiffPrecImp extends FilterAllDiffPrec {
         return true;
     }
 
+    /**
+     * Applies the precedence constraints on the bipartite graph.
+     *
+     * @param precedenceGraph the precedence graph
+     * @param topologicalTraversal the topological traversal of the precedence graph
+     * @param lb true iff lower bounds are filtered (upper bounds whenever lb is false)
+     * @return true iff the precedence constraints have been enforced without any domain's wipe-out
+     */
     private boolean updateBoundWithinDigraph(DirectedGraph precedenceGraph, int[] topologicalTraversal, boolean lb) {
         ISetIterator it;
         for(int i = 0; i < topologicalTraversal.length; i++) {
@@ -250,6 +271,15 @@ public class AllDiffPrecImp extends FilterAllDiffPrec {
         removedArcs.clear();
     }
 
+    /**
+     * Returns true iff a maximum matching of size n has been found within the bipartite graph induced by the instantiation var <-- value.
+     *
+     * @param var the variable
+     * @param value the value
+     * @param precedenceGraph the precedence graph
+     * @param topologicalTraversal the topological traversal of the precedence graph
+     * @return true iff a maximum matching has been found
+     */
     private boolean findMaximumMatching(int var, int value, DirectedGraph precedenceGraph, int[] topologicalTraversal) {
         if(!buildDigraph(var, value)) {
             restoreDigraph();

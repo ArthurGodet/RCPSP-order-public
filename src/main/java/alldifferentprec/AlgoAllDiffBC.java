@@ -80,7 +80,7 @@ public class AlgoAllDiffBC {
     }
 
     public boolean filter() throws ContradictionException {
-        // TODO : the only different with the code in Choco is the boolean returning if there was a pruning or not
+        // TODO : the only difference with the code in Choco is the boolean returning if there was a pruning or not
         boolean again;
         boolean hasFiltered = false;
         do {

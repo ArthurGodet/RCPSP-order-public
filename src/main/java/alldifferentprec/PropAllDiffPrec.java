@@ -5,14 +5,12 @@
 
 package alldifferentprec;
 
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.stream.IntStream;
 import org.chocosolver.solver.Model;
-import org.chocosolver.solver.constraints.Constraint;
 import org.chocosolver.solver.constraints.Propagator;
 import org.chocosolver.solver.exception.ContradictionException;
 import org.chocosolver.solver.variables.BoolVar;
@@ -22,6 +20,11 @@ import org.chocosolver.util.objects.graphs.DirectedGraph;
 import org.chocosolver.util.objects.setDataStructures.ISetIterator;
 import org.chocosolver.util.objects.setDataStructures.SetType;
 
+/**
+ * Propagator for the AllDiffPrec constraint.
+ *
+ * @author Arthur Godet <arth.godet@gmail.com>
+ */
 public class PropAllDiffPrec extends Propagator<IntVar> {
     private final IntVar[] variables;
     private final boolean[][] precedence;
@@ -124,6 +127,13 @@ public class PropAllDiffPrec extends Propagator<IntVar> {
     // Build data
     //***********************************************************************************
 
+    /**
+     * Builds the ancestors matrix.
+     *
+     * @param predecessors the predecessors matrix
+     * @param successors the successors matrix
+     * @return the ancestors matrix
+     */
     public static int[][] buildAncestors(int[][] predecessors, int[][] successors) {
         int n = predecessors.length;
         int[][] ancestors = new int[n][];
@@ -166,6 +176,13 @@ public class PropAllDiffPrec extends Propagator<IntVar> {
         return ancestors;
     }
 
+    /**
+     * Builds the descendants matrx.
+     *
+     * @param predecessors the predecessors matrix
+     * @param successors the successors matrix
+     * @return the descendants matrix
+     */
     public static int[][] buildDescendants(int[][] predecessors, int[][] successors) {
         int n = successors.length;
         int[][] descendants = new int[n][];
@@ -208,10 +225,25 @@ public class PropAllDiffPrec extends Propagator<IntVar> {
         return descendants;
     }
 
+    /**
+     * Returns true iff the array a contains the value v.
+     *
+     * @param a the array
+     * @param v the value
+     * @return true iff the array a contains the value v
+     */
     public static boolean contains(int[] a, int v) {
         return contains(a, v, a.length);
     }
 
+    /**
+     * Returns true iff the array a contains the value v before the index maxIdx (strictly).
+     *
+     * @param a the array
+     * @param v the value
+     * @param maxIdx the maximum index
+     * @return true iff a contains v before index maxIdx
+     */
     public static boolean contains(int[] a, int v, int maxIdx) {
         for(int i = 0; i < maxIdx; i++) {
             if(a[i] == v) {
@@ -226,11 +258,12 @@ public class PropAllDiffPrec extends Propagator<IntVar> {
     }
 
     /**
-     * Returns the precedence matrix. precedence[v][w] = true iff v is a predecessor of w
+     * Returns the precedence matrix, such that precedence[v][w] = true iff v is a predecessor of w.
      *
-     * @param predecessors
-     * @param successors
-     * @return
+     * @param predecessors the predecessors matrix
+     * @param successors the successors matrix
+     * @param alreadyComputed true iff predecessors and successors matrix are ancestors and descendants matrix
+     * @return the precedence matrix
      */
     public static boolean[][] buildPrecedence(int[][] predecessors, int[][] successors, boolean alreadyComputed) {
         int[][] ancestors = alreadyComputed ? predecessors : buildAncestors(predecessors, successors);
@@ -266,6 +299,12 @@ public class PropAllDiffPrec extends Propagator<IntVar> {
         return precGraph;
     }
 
+    /**
+     * Builds the topological traversal of the given precedence graph.
+     *
+     * @param precGraph the precedence graph
+     * @return the topological traversal
+     */
     public static int[] buildTopologicalTraversal(DirectedGraph precGraph) {
         int n = precGraph.getNbMaxNodes();
         int[] depth = new int[n];
@@ -297,6 +336,15 @@ public class PropAllDiffPrec extends Propagator<IntVar> {
                         .toArray();
     }
 
+    /**
+     * Returns the precedence variables matrix, such that precedence[v][w] = true iff v is a predecessor of w.
+     * The precedence variables are not instantiated if the precedence relation is not known.
+     *
+     * @param model the model
+     * @param predecessors the predecessors matrix
+     * @param successors the successors matrix
+     * @return the precedence matrix
+     */
     public static BoolVar[][] buildPrecedenceVars(Model model, int[][] predecessors, int[][] successors) {
         int[][] ancestors = buildAncestors(predecessors, successors);
         int[][] descendants = buildDescendants(predecessors, successors);
@@ -318,51 +366,24 @@ public class PropAllDiffPrec extends Propagator<IntVar> {
         return precedence;
     }
 
+    /**
+     * Returns the filtering algorithm structure for the given variables, the precedence and whose behaviour is one of the following:
+     * BESSIERE, GREEDY, GREEDY_RC, GODET_RC, GODET_BC or DEFAULT (which is GODET_BC).
+     *
+     * @param variables the variables
+     * @param precedence the precedence matrix
+     * @param filt the filtering algorithm to select
+     * @return the filtering algorithm
+     */
     public static FilterAllDiffPrec buildFilter(IntVar[] variables, boolean[][] precedence, String filt) {
         switch(filt) {
             case "BESSIERE": return new AllDiffPrec(variables, precedence);
             case "GREEDY": return new GreedyBoundSupport(variables, precedence);
-            case "GREEDY_RC": return new GreedyBoundSupport(variables, precedence,true);
-            case "GODET_RC": return new AllDiffPrecImp(variables, precedence,true);
+            case "GREEDY_RC": return new GreedyBoundSupport(variables, precedence, true);
+            case "GODET_RC": return new AllDiffPrecMoreThanBc(variables, precedence, true);
             case "GODET":
             case "DEFAULT":
-            default: return new AllDiffPrecImp(variables, precedence);
-        }
-    }
-
-    public static void main(String[] args) {
-        Model model = new Model();
-        IntVar[] vars = new IntVar[5];
-        vars[0] = model.intVar("vars["+0+"]", 1, 5);
-        vars[1] = model.intVar("vars["+1+"]", 2, 6);
-        vars[2] = model.intVar("vars["+2+"]", 2, 6);
-        vars[3] = model.intVar("vars["+3+"]", 3, 6);
-        vars[4] = model.intVar("vars["+4+"]", 3, 6);
-        model.allDifferent(vars, "BC").post();
-        model.arithm(vars[0], "<", vars[1]).post();
-        model.arithm(vars[0], "<", vars[2]).post();
-        boolean[][] precedence = new boolean[5][5];
-        for(int i = 0; i < vars.length; i++) {
-            for(int j = 0; j < vars.length; j++) {
-                if(i == 0 && (j == 1 || j == 2)) {
-                    precedence[i][j] = true;
-                } else {
-                    precedence[i][j] = false;
-                }
-            }
-        }
-        model.post(
-            new Constraint(
-                "ALL_DIFFERENT_PREC",
-                new PropAllDiffPrec(vars, precedence, new AllDiffPrec(vars, precedence))
-            )
-        );
-
-        try {
-            model.getSolver().propagate();
-            System.out.println(Arrays.toString(vars));
-        } catch(ContradictionException ex) {
-            ex.printStackTrace();
+            default: return new AllDiffPrecMoreThanBc(variables, precedence);
         }
     }
 }

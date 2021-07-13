@@ -20,6 +20,12 @@ import org.chocosolver.solver.search.strategy.decision.IntDecision;
 import org.chocosolver.solver.search.strategy.strategy.AbstractStrategy;
 import org.chocosolver.solver.variables.IntVar;
 
+/**
+ * Failure-Directed Search introduced in the following paper :
+ * Vilim, Laborie and Shaw. Failure-Directed Search for Constraint-Based Scheduling. In Integration of AI and OR Techniques in Constraint Programming - 12th International Conference, CPAIOR 2015, Barcelona, Spain, May 18-22, 2015, Proceedings. Ed. by Laurent Michel.Vol. 9075. Lecture Notes in Computer Science. Springer, 2015, pp. 437–453.
+ *
+ * @author Arthur Godet <arth.godet@gmail.com>
+ */
 public class FailureDirectedSearch extends AbstractStrategy<IntVar> implements IMonitorDownBranch, IMonitorContradiction {
     public final static DecisionOperator<IntVar> OP = DecisionOperatorFactory.makeIntReverseSplit(); // operator to make decision of the format : var >= value
     public final static DecisionOperator<IntVar> OP2 = DecisionOperatorFactory.makeIntSplit(); // operator to make decision of the format : var < value

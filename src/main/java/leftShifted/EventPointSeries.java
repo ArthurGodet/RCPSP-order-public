@@ -8,6 +8,12 @@ package leftShifted;
 import java.util.Comparator;
 import org.chocosolver.util.sort.ArraySort;
 
+/**
+ * EventPointSeries data structure introduced in the following paper:
+ * Letort, Beldiceanu, and Carlsson. A Scalable SweepAlgorithm for the cumulative Constraint. In Principles and Practice of Constraint Programming - 18th International Conference, CP 2012, Québec City, QC, Canada, October 8-12, 2012. Proceedings. Ed. by Michela Milano. Vol. 7514. Lecture Notes in Computer Science. Springer, 2012, pp. 439–45.
+ *
+ * @author Arthur Godet <arth.godet@gmail.com>
+ */
 public class EventPointSeries {
     protected Event[] eventsArray;
     protected int nbEvents;

@@ -5,6 +5,12 @@
 
 package leftShifted;
 
+/**
+ * Profile data structure introduced in the following paper :
+ * Gay, Hartet and Schaus. Simple and Scalable Time-Table Filtering for the Cumulative Constraint. In Principles and Practice of Constraint Programming - 21st International Conference, CP 2015, Cork, Ireland, August 31 - September 4, 2015, Proceedings. Ed. by Gilles Pesant. Vol. 9255. Lecture Notes in Computer Science. Springer, 2015, pp. 149-157.
+ *
+ * @author Arthur Godet <arth.godet@gmail.com>
+ */
 public class Profile {
     private int idx;
     private final int[] timePoints;

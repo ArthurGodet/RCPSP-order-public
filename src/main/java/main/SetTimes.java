@@ -17,8 +17,9 @@ import org.chocosolver.solver.variables.Task;
 import org.chocosolver.util.ESat;
 
 /**
- * Search for scheduling problems described in the following paper :
- * Godard, D., Laborie, P., Nuijten, W.: Randomized large neighborhood search for cumulative scheduling. In: Biundo, S., Myers, K.L., Rajan, K. (eds.) Proceedings of the Fifteenth International Conference on Automated Planning and Scheduling(ICAPS 2005), June 5-10 2005, Monterey, California, USA. pp. 81–89. AAAI (2005),http://www.aaai.org/Library/ICAPS/2005/icaps05-009.php
+ * Search for scheduling problems described in the following papers:
+ * Le Pape et al. Time-versus-Capacity Compromises in Project Scheduling. In Proceedings of the Thirteenth Workshop of the U.K. Planning Special Interest Group. 1994.
+ * Godard, Laborie and Nuijten. Randomized large neighborhood search for cumulative scheduling. In Biundo, S., Myers, K.L., Rajan, K. (eds.) Proceedings of the Fifteenth International Conference on Automated Planning and Scheduling(ICAPS 2005), June 5-10 2005, Monterey, California, USA. pp. 81–89. AAAI (2005),http://www.aaai.org/Library/ICAPS/2005/icaps05-009.php
  *
  * Beware that the search is not complete in general, as stated in the paper.
  *

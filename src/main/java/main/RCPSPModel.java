@@ -8,7 +8,6 @@ import alldifferentprec.PropAllDiffPrec;
 import data.Activity;
 import data.Factory;
 import data.InstanceSP;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import leftShifted.PropOrderLeftShifted;
@@ -32,19 +31,13 @@ import org.chocosolver.solver.variables.Task;
 
 public class RCPSPModel {
     private final Model model;
-    private final Task[] tasks;
-    private final IntVar[] order;
-    private IntVar[] indexes;
-    private final IntVar[] starts;
-    private final IntVar makespan;
-    private BoolVar[][] precedence;
 
     public RCPSPModel(InstanceSP instance, ConfigurationSearch configuration) {
         this.model = new Model();
-        tasks = new Task[instance.getActivities().size()];
-        starts = new IntVar[instance.getActivities().size()];
+        Task[] tasks = new Task[instance.getActivities().size()];
+        IntVar[] starts = new IntVar[instance.getActivities().size()];
         int hor = instance.getHorizon();
-        for(int k = 0; k<tasks.length; k++) {
+        for(int k = 0; k< tasks.length; k++) {
             Activity activity = instance.getActivities().get(k);
             int d = activity.getDuration();
             starts[k] = model.intVar("start[" + activity.getID() + "]", 0, hor - d);
@@ -78,10 +71,11 @@ public class RCPSPModel {
             }
         }
 
-        makespan = model.intVar("makespan", 0, hor);
+        IntVar makespan = model.intVar("makespan", 0, hor);
         model.max(makespan, Arrays.stream(tasks).map(Task::getEnd).toArray(IntVar[]::new)).post();
         model.setObjective(false, makespan);
 
+        IntVar[] order;
         if(
             configuration.equals(ConfigurationSearch.ALL_DIFF_PREC)
                 || configuration.equals(ConfigurationSearch.ALL_DIFF_PREC_IMP)
@@ -112,11 +106,10 @@ public class RCPSPModel {
                         }
                     }
                     return id;
-                },
-                order
+                }, order
             );
-            this.indexes = model.intVarArray("indexes", order.length, 0, order.length - 1);
-            this.precedence = PropAllDiffPrec.buildPrecedenceVars(model, instance.getPredecessors(), instance.getSuccessors());
+            IntVar[] indexes = model.intVarArray("indexes", order.length, 0, order.length - 1);
+            BoolVar[][] precedence = PropAllDiffPrec.buildPrecedenceVars(model, instance.getPredecessors(), instance.getSuccessors());
             boolean[][] prec = PropAllDiffPrec.buildPrecedence(instance.getPredecessors(), instance.getSuccessors());
             for(int i = 0; i < precedence.length; i++) {
                 for(int j = 0; j < precedence.length; j++) {
@@ -167,31 +160,26 @@ public class RCPSPModel {
                 )
             );
         } else {
-            order = null;
-            declareSearch(configuration);
+            if (configuration.equals(ConfigurationSearch.SMALLEST)) {
+                model.getSolver().setSearch(Search.intVarSearch(new Smallest(), new IntDomainMin(), starts));
+            } else if (configuration.equals(ConfigurationSearch.SET_TIMES)) {
+                SetTimes setTimes = new SetTimes(tasks);
+                model.post(new Constraint("SET_TIMES", setTimes));
+                model.getSolver().setSearch(Search.intVarSearch(setTimes, new IntDomainMin(), starts));
+            } else if(configuration.equals(ConfigurationSearch.FDS)) {
+                FailureDirectedSearch fds = new FailureDirectedSearch(starts);
+                model.getSolver().plugMonitor(fds);
+                model.getSolver().setSearch(fds);
+                model.getSolver().setGeometricalRestart(100, 1.15, new FailCounter(model, Integer.MAX_VALUE), Integer.MAX_VALUE);
+            } else {
+                throw new UnsupportedOperationException();
+            }
         }
 
         model.getSolver().setSearch(
             model.getSolver().getSearch(),
             Search.inputOrderLBSearch(makespan)
         );
-    }
-
-    private void declareSearch(ConfigurationSearch configuration) {
-        if (configuration.equals(ConfigurationSearch.SMALLEST)) {
-            model.getSolver().setSearch(Search.intVarSearch(new Smallest(), new IntDomainMin(), starts));
-        } else if (configuration.equals(ConfigurationSearch.SET_TIMES)) {
-            SetTimes setTimes = new SetTimes(tasks);
-            model.post(new Constraint("SET_TIMES", setTimes));
-            model.getSolver().setSearch(Search.intVarSearch(setTimes, new IntDomainMin(), starts));
-        } else if(configuration.equals(ConfigurationSearch.FDS)) {
-            FailureDirectedSearch fds = new FailureDirectedSearch(starts);
-            model.getSolver().plugMonitor(fds);
-            model.getSolver().setSearch(fds);
-            model.getSolver().setGeometricalRestart(100, 1.15, new FailCounter(model, Integer.MAX_VALUE), Integer.MAX_VALUE);
-        } else {
-            throw new UnsupportedOperationException();
-        }
     }
 
     public Model getModel() {

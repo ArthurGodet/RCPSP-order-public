@@ -53,6 +53,12 @@ public class IntUnionFind {
         }
     }
 
+    /**
+     * Returns the index of the set containing a.
+     *
+     * @param a the value
+     * @return the index of the set containing a
+     */
     public int find(int a) {
         return root(a);
     }
@@ -76,6 +82,12 @@ public class IntUnionFind {
         return i;
     }
 
+    /**
+     * Does the union between the sets containing a and b.
+     *
+     * @param a the first value
+     * @param b the second value
+     */
     public void union(int a, int b) {
         int idx1 = root(a);
         int idx2 = root(b);

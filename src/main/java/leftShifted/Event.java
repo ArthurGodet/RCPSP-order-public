@@ -5,6 +5,12 @@
 
 package leftShifted;
 
+/**
+ * Event data structure introduced in the following paper:
+ *
+ *
+ * @author Arthur Godet <arth.godet@gmail.com>
+ */
 public class Event implements Comparable<Event> {
     public final static int SCP = 0, ECP = 1, CCP = 2, PR = 3;
 

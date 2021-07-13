@@ -13,10 +13,15 @@ import org.chocosolver.solver.constraints.PropagatorPriority;
 import org.chocosolver.solver.exception.ContradictionException;
 import org.chocosolver.solver.variables.IntVar;
 import org.chocosolver.solver.variables.events.IntEventType;
-import org.chocosolver.solver.variables.events.PropagatorEventType;
 import org.chocosolver.util.ESat;
 import org.chocosolver.util.tools.ArrayUtils;
 
+/**
+ * Propagator for the LeftShifted constraint introduced in the following thesis :
+ * TODO: add the thesis citation when it is fixed (and/or the CP paper if accepted)
+ *
+ * @author Arthur Godet <arth.godet@gmail.com>
+ */
 public class PropOrderLeftShifted extends Propagator<IntVar> {
     protected final IntVar[] order;
     protected final IntVar[] starts;

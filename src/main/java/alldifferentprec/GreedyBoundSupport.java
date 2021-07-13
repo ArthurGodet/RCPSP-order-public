@@ -15,6 +15,12 @@ import org.chocosolver.util.objects.setDataStructures.ISet;
 import org.chocosolver.util.objects.setDataStructures.ISetIterator;
 import org.chocosolver.util.objects.setDataStructures.SetFactory;
 
+/**
+ * Filtering algorithm for the AllDiffPrec constraint introduced in the following paper :
+ * Bessiere et al. (2011). The AllDifferent Constraint with Precedences. In Integration of AI and OR Techniques in Constraint Programming for Combinatorial Optimization Problems - 8th International Conference, CPAIOR 2011, Berlin, Germany, May 23-27, 2011. Proceedings. Ed. by Tobias Achterberg and J. Christopher Beck. Vol. 5697. Lecture Notes in Computer Science. Springer, 2011, pp. 36-52.
+ *
+ * @author Arthur Godet <arth.godet@gmail.com>
+ */
 public class GreedyBoundSupport extends FilterAllDiffPrec {
     private final boolean rcFiltering;
     private final ISet instVars;

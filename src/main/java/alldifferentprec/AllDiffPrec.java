@@ -15,6 +15,12 @@ import org.chocosolver.solver.variables.IntVar;
 import org.chocosolver.solver.variables.events.IntEventType;
 import org.chocosolver.util.objects.graphs.DirectedGraph;
 
+/**
+ * Filtering algorithm for the AllDiffPrec constraint introduced in the following paper :
+ * Bessiere et al. (2011). The AllDifferent Constraint with Precedences. In Integration of AI and OR Techniques in Constraint Programming for Combinatorial Optimization Problems - 8th International Conference, CPAIOR 2011, Berlin, Germany, May 23-27, 2011. Proceedings. Ed. by Tobias Achterberg and J. Christopher Beck. Vol. 5697. Lecture Notes in Computer Science. Springer, 2011, pp. 36-52.
+ *
+ * @author Arthur Godet <arth.godet@gmail.com>
+ */
 public class AllDiffPrec extends FilterAllDiffPrec {
     private IntUnionFind unionFind;
     private final IntUnionFind unionFindLB;
@@ -147,40 +153,43 @@ public class AllDiffPrec extends FilterAllDiffPrec {
         }
         return hasFiltered;
     }
-    //*/
 
-//    private boolean filter(boolean filterUb) {
-//        boolean hasFiltered = false;
-//        for (int i = 0; i < variables.length; i++) {
-//            list.sort(comparator);
-//            unionFind.init();
-//            int b;
-//            int nbSucc = 0;
-//            for (int k = 0; k < list.size(); k++) {
-//                int j = list.get(k);
-//                if(j != i) {// && ub[j] >= ub[i]) {
-//                    if (!isBefore(filterUb, i, j)) {
-//                        int idxSet = unionFind.find(lb[j]);
-//                        if(unionFind.find(unionFind.getMax(idxSet) + 1) >= 0) {
-//                            unionFind.union(unionFind.getMin(idxSet), unionFind.getMax(idxSet) + 1);
-//                        }
-//                    } else {
-//                        nbSucc++;
-//                    }
-//                    b = ub[j];
-//                    for(int n = 1; n <= nbSucc && b >= lb[i]; n++) {
-//                        int idxSet = unionFind.find(b);
-//                        b = (idxSet == -1 ? lb[i] : unionFind.getMin(idxSet)) - 1;
-//                    }
-//                    if(nbSucc > 0 && ub[i] > b) {
-//                        hasFiltered = true;
-//                        ub[i] = b;
-//                    }
-//                }
-//            }
-//        }
-//        return hasFiltered;
-//    }
+    /*
+    // Second version of the filtering algorithm
+    // Proposed in Arthur Godet's thesis (TODO: to change once the citation is fixed)
+    private boolean filter(boolean filterUb) {
+        boolean hasFiltered = false;
+        for (int i = 0; i < variables.length; i++) {
+            list.sort(comparator);
+            unionFind.init();
+            int b;
+            int nbSucc = 0;
+            for (int k = 0; k < list.size(); k++) {
+                int j = list.get(k);
+                if(j != i) {// && ub[j] >= ub[i]) {
+                    if (!isBefore(filterUb, i, j)) {
+                        int idxSet = unionFind.find(lb[j]);
+                        if(unionFind.find(unionFind.getMax(idxSet) + 1) >= 0) {
+                            unionFind.union(unionFind.getMin(idxSet), unionFind.getMax(idxSet) + 1);
+                        }
+                    } else {
+                        nbSucc++;
+                    }
+                    b = ub[j];
+                    for(int n = 1; n <= nbSucc && b >= lb[i]; n++) {
+                        int idxSet = unionFind.find(b);
+                        b = (idxSet == -1 ? lb[i] : unionFind.getMin(idxSet)) - 1;
+                    }
+                    if(nbSucc > 0 && ub[i] > b) {
+                        hasFiltered = true;
+                        ub[i] = b;
+                    }
+                }
+            }
+        }
+        return hasFiltered;
+    }
+    //*/
 
     private boolean propagateBounds(boolean filterUb, ICause aCause) throws ContradictionException {
         boolean hasFiltered;
